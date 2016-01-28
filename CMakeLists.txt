@@ -89,13 +89,7 @@ set(FORTE_TESTS_LINK_DIRS "" CACHE PATH "Test specific library directories")
 set(FORTE_TESTS_INC_DIRS "" CACHE PATH "Test specific include directories")
 
 
-IF(FORTE_TESTS)
-    enable_testing()
-    ADD_SUBDIRECTORY(tests)
-ENDIF(FORTE_TESTS)
 
-
-ADD_SUBDIRECTORY(systemtests)
 
 #######################################################################################
 # FORTE forte_config.h 
