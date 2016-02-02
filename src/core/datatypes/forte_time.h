@@ -88,10 +88,12 @@ class CIEC_TIME : public CIEC_ANY_MAGNITUDE{
     TValueType getInSeconds() const;
     TValueType getInMiliSeconds() const;
     TValueType getInMicroSeconds() const;
+    TValueType getInNanoSeconds() const;
 
     void setFromSeconds(TValueType pa_nValue);
     void setFromMiliSeconds(TValueType pa_nValue);
     void setFromMicroSeconds(TValueType pa_nValue);
+    void setFromNanoSeconds(TValueType pa_nValue);
 
     static const TForteUInt16 scm_unMaxStringBufSize;
 };
