@@ -45,6 +45,8 @@ void FORTE_BL_PWM::executeEvent(int pa_nEIID){
 	switch(pa_nEIID){
     case scm_nEventINITID:
     	if(m_poPWM != NULL){
+    		//Fix output before stopping the PWM
+    		//TODO:Handle the PWM output level when stopping it
     		m_poPWM->setRunState(BlackLib::stop);
     		delete m_poPWM;
     		m_poPWM = NULL;
@@ -75,7 +77,8 @@ void FORTE_BL_PWM::executeEvent(int pa_nEIID){
 				break;
 			}
             delete[] pacBuffer;
-            bRet = m_poPWM->setDutyPercent(0.0);
+            bRet = m_poPWM->setRunState(BlackLib::stop);
+            bRet = bRet && m_poPWM->setDutyPercent(0.0);
 			bRet = bRet && m_poPWM->setPeriodTime(Period().getInMicroSeconds(), BlackLib::microsecond);
 			bRet = bRet && m_poPWM->setDutyPercent(Duty());
 			if(Polarity() == true){
@@ -112,7 +115,8 @@ void FORTE_BL_PWM::executeEvent(int pa_nEIID){
     	bRet = m_poPWM->setDutyPercent(0.0);
     	bRet = bRet && m_poPWM->setPeriodTime(Period().getInMicroSeconds(), BlackLib::microsecond);
     	bRet = bRet && m_poPWM->setDutyPercent(Duty());
-    	if(Polarity() == true){
+    	if(Polarity() == false){
+    		//BlackLib polarity seems to be inverse; For us straight is HIGH->LOW
     		bRet = bRet && m_poPWM->setPolarity(BlackLib::straight);
     	}else{
     		bRet = bRet && m_poPWM->setPolarity(BlackLib::reverse);
@@ -130,20 +134,37 @@ void FORTE_BL_PWM::executeEvent(int pa_nEIID){
     	sendOutputEvent(scm_nEventCNFID);
     	break;
     case scm_nEventStartID:
-    	if (m_poPWM != NULL && !m_poPWM->setRunState(BlackLib::run)){
-    		//Could not start PWM
-    		DEVLOG_ERROR("Unable to run PWM\n");
-    		STATUS() = "ERROR running PWM";
-    		QO()=false;
+    	if(m_poPWM != NULL){
+    		if(m_poPWM->setRunState(BlackLib::run)){
+    	    	QI() = true;
+    	    	STATUS() = "Running";
+    		}else{
+				//Could not start PWM
+				DEVLOG_ERROR("Unable to run PWM\n");
+				STATUS() = "ERROR running PWM";
+				QO()=false;
+    		}
+    	}else{
+        	QI() = false;
+        	STATUS() = "PWM not initialized";
     	}
     	sendOutputEvent(scm_nEventCNFID);
     	break;
     case scm_nEventStopID:
-    	if (m_poPWM != NULL && !m_poPWM->setRunState(BlackLib::stop)){
-    		//Could not stop PWM
-    		DEVLOG_ERROR("Unable to stop PWM\n");
-    		STATUS() = "ERROR stopping PWM";
-    		QO()=false;
+    	if (m_poPWM != NULL){
+    		//TODO:Handle the PWM output level when stopping it
+    		if(m_poPWM->setRunState(BlackLib::stop)){
+				STATUS() = "PWM Stopped";
+				QO()=true;
+    		}else{
+				//Could not stop PWM
+				DEVLOG_ERROR("Unable to stop PWM\n");
+				STATUS() = "ERROR stopping PWM";
+				QO()=false;
+    		}
+    	}else{
+        	QI() = false;
+        	STATUS() = "PWM not initialized";
     	}
     	sendOutputEvent(scm_nEventCNFID);
     	break;
