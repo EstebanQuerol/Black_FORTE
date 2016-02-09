@@ -53,6 +53,20 @@ class CIEC_STRING : public CIEC_ANY_STRING{
      *        -1 on on error
      */
     virtual int fromString(const char *pa_pacValue);
+
+
+    /*! \brief Converts string value to data type value
+     *
+     *   This command implements a conversion function from IEC61131
+     *   data type (string format) with fixed length to a C++ conform type.
+     *   This function is necessary for communication with a proper engineering system.
+     *   \param pa_pacValue string buffer
+     *   \param nSrcLen fixed length
+     *   \return number of bytes taken used from the buffer
+     *        -1 on on error
+     */
+    virtual int fromString(const char *pa_pacValue,int pa_nSrcLen);
+
     /*! \brief Converts data type value to string
      *
      *   This command implements a conversion function from C++ data type
@@ -63,6 +77,7 @@ class CIEC_STRING : public CIEC_ANY_STRING{
      *   \return number of bytes used in the buffer without trailing 0x00
      *           -1 on error
      */
+
     virtual int toString(char* pa_acValue, unsigned int pa_nBufferSize) const ;
 
     /*! \brief Converts a UTF-8 encoded string to a STRING (ISO 10646 Row 00 internally)
