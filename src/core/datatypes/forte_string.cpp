@@ -38,6 +38,32 @@ int CIEC_STRING::fromString(const char *pa_pacValue){
   return nSrcLen;
 }
 
+int CIEC_STRING::fromString(const char *pa_pacValue, int pa_nSrcLen ){
+
+  int nSrcCappedLength = pa_nSrcLen;
+
+  if(0 < pa_nSrcLen){
+    if((pa_nSrcLen >= 7) && (0 == strncmp(pa_pacValue, "STRING#", 7))){
+      pa_pacValue += 7;
+      nSrcCappedLength -= 7;
+    }
+
+    if (pa_nSrcLen > scm_unMaxStringLen)
+      nSrcCappedLength = scm_unMaxStringLen;
+
+
+    if (*pa_pacValue == '\'') {
+      reserve(static_cast<TForteUInt16>(nSrcCappedLength));
+      if (unescapeFromString(pa_pacValue, '\'') < 0)
+        return -1;
+    } else {
+      assign(pa_pacValue, static_cast<TForteUInt16>(nSrcCappedLength));
+    }
+  }
+
+  return pa_nSrcLen;
+}
+
 int CIEC_STRING::toString(char* pa_acValue, unsigned int pa_nBufferSize) const {
   int nRetVal = -1;
   if(static_cast<unsigned int>(length() + 2) < pa_nBufferSize){  //add 2 for the leading and closing '
