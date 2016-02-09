@@ -2,8 +2,8 @@
 SET(ARM_EABIHF_UTILS_ROOT "" CACHE PATH "Linux-arm-eabihf toolchain directory")
 #TODO: Check if path exists and show a message when it doesn't
 set(toolchain_dir ${ARM_EABIHF_UTILS_ROOT})
-set(toolchain_bin_dir ${toolchain_dir}bin)
-set(toolchain_libc_dir ${toolchain_dir}arm-linux-gnueabihf/libc)
+set(toolchain_bin_dir ${toolchain_dir}/bin)
+set(toolchain_libc_dir ${toolchain_dir}/arm-linux-gnueabihf/libc)
 set(toolchain_inc_dir ${toolchain_libc_dir}/include)
 set(toolchain_lib_dir ${toolchain_libc_dir}/usr/lib)
 set(CMAKE_SYSTEM_NAME Linux CACHE INTERNAL "system name")
