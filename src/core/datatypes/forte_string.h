@@ -80,6 +80,20 @@ class CIEC_STRING : public CIEC_ANY_STRING{
 
     virtual int toString(char* pa_acValue, unsigned int pa_nBufferSize) const ;
 
+    /*! \brief Converts data type value to string
+     *
+     *   This command implements a conversion function from C++ data type
+     *   to IEC61131 conform data type (string format), without parsing DollarScapeChar.
+     *   This function is necessary for communication with a proper engineering system.
+     *   \param pa_acValue          Pointer to char-array for the result
+     *   \param pa_nBufferSize      Size of the buffer
+     *   \param a					Int, used to overcharge
+     *   \return number of bytes used in the buffer without trailing 0x00
+     *           -1 on error
+     */
+
+    virtual int toString(char* pa_acValue, unsigned int pa_nBufferSize, int a) const ;
+
     /*! \brief Converts a UTF-8 encoded string to a STRING (ISO 10646 Row 00 internally)
     *
     *   This command implements a conversion function from a UTF-8
