@@ -15,17 +15,17 @@
 #include <sync.h>
 
 /**  \ingroup FORTE-HAL 
- * \defgroup posix_hal PC FORTE Hardware Abstraction Layer
+ * \defgroup xenomai_hal PC FORTE Hardware Abstraction Layer
  *
- * \brief The FORTE-HAL implementation for normal PCs
+ * \brief The FORTE-HAL implementation for real time xenomai systems
  *
- * It will mainly work under linux or linux similar environments like cygwin.
+ * It will under xenomai environtment.
  */
 
-/*! \ingroup posix_hal
- * \brief The thread implementation for the posix thread interface. 
+/*! \ingroup xenomai_hal
+ * \brief The thread implementation for the xenomai thread interface.
  */
-class CPosixThread {
+class CXenomaiThread {
   public:
     /*! \brief Constructor of the Thread class
      *
@@ -33,13 +33,13 @@ class CPosixThread {
      *  @param pa_nStackSize the Size of the stack the thread is allowed to use. 0 means use system default stack size.
      *      If you like to set this value it is best to use the form: PTHREAD_STACK_MIN + additional bytes you need.
      */
-    CPosixThread(long pa_nStackSize = 0);
+	CXenomaiThread(long pa_nStackSize = 0);
 
     /*! \brief Stops and destroys thread.
      *
      *  Will stop the execution if running and destroy the thread including all system specific data.
      */
-    virtual ~CPosixThread();
+    virtual ~CXenomaiThread();
 
     /*! \brief Indicates if the thread is allowed to execute.
      *
@@ -131,7 +131,7 @@ class CPosixThread {
 
     CPCSyncObject mJoinMutex;
 
-    /*! \brief data needed for posix scheduling system to identify the thread.
+    /*! \brief data needed for Xenomai scheduling system to identify the thread.
      */
     pthread_t m_stThreadID;
     /*! \brief Size of the stack used by this thread.
@@ -146,13 +146,13 @@ class CPosixThread {
 
     //we don't want that threads can be copied or assigned therefore the copy constructor and assignment operator are declared private
     //but not implemented
-    CPosixThread(const CPosixThread&);
-    CPosixThread& operator = (const CPosixThread &);
+    CXenomaiThread(const CXenomaiThread&);
+    CXenomaiThread& operator = (const CXenomaiThread &);
 
 };
 
 
-typedef CPosixThread CThread;  //allows that doxygen can generate better documentation
+typedef CXenomaiThread CThread;  //allows that doxygen can generate better documentation
 
 #endif /*THREAD_H_*/
 

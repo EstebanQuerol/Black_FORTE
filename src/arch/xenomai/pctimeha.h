@@ -11,9 +11,9 @@
 #include "thread.h"
 #include "../timerha.h"
 
-/*! \ingroup posix_hal
+/*! \ingroup xenomai_hal
  *\ingroup EXTEVHAND
- *\brief the timer handler for the pc architecture. 
+ *\brief the timer handler for the xenomai architecture.
  */
 class CPCTimerHandler : public CTimerHandler, private CThread{
   public:

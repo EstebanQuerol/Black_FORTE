@@ -15,7 +15,7 @@
 #include <unistd.h>
 #include <criticalregion.h>
 
-void CPosixThread::start(void){
+void CXenomaiThread::start(void){
   // Get new Thread
   if(0 == m_stThreadID){
 
@@ -62,9 +62,9 @@ void CPosixThread::start(void){
   }while(!isAlive());
 }
 
-void * CPosixThread::threadFunction(void *arguments){
+void * CXenomaiThread::threadFunction(void *arguments){
   // Get pointer to CThread object out of void pointer
-  CPosixThread *pThread = (CPosixThread *) arguments;
+	CXenomaiThread *pThread = (CXenomaiThread *) arguments;
 
   // if pointer is ok
   if(0 != pThread){
@@ -80,7 +80,7 @@ void * CPosixThread::threadFunction(void *arguments){
   return 0;
 }
 
-CPosixThread::CPosixThread(long pa_nStackSize) :
+CXenomaiThread::CXenomaiThread(long pa_nStackSize) :
   m_bAlive(false), m_stThreadID(0), m_nStackSize(pa_nStackSize), m_pacStack(0){
 
   if(0 != m_nStackSize){
@@ -92,7 +92,7 @@ CPosixThread::CPosixThread(long pa_nStackSize) :
   }
 }
 
-CPosixThread::~CPosixThread(){
+CXenomaiThread::~CXenomaiThread(){
   if(0 != m_stThreadID){
     end();
   }
@@ -102,23 +102,23 @@ CPosixThread::~CPosixThread(){
   sem_destroy(&m_stSuspendSemaphore);
 }
 
-void CPosixThread::setDeadline(const CIEC_TIME &pa_roVal){
+void CXenomaiThread::setDeadline(const CIEC_TIME &pa_roVal){
   m_oDeadline = pa_roVal;
   //under the posix pthread implemention currently it makes no sense to set any priority.
   //It will not be considered.
 }
 
-void CPosixThread::resumeSelfSuspend(void){
+void CXenomaiThread::resumeSelfSuspend(void){
   sem_post(&m_stSuspendSemaphore);
 }
 
-void CPosixThread::join(void){
+void CXenomaiThread::join(void){
   if(0 != m_stThreadID){
     CCriticalRegion criticalRegion(mJoinMutex);
   }
 }
 
-void CPosixThread::selfSuspend(void) {
+void CXenomaiThread::selfSuspend(void) {
   int n;
   do{
     n = sem_wait(&m_stSuspendSemaphore);
