@@ -24,21 +24,21 @@ const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anDataOutpu
 
 const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anDataOutputTypeIds[] = {g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING};
 
-const TForteInt16 FORTE_B_SECCOM_CONTROLREMOTO::scm_anEIWithIndexes[] = {0, 4, 8, 10, -1};
+const TForteInt16 FORTE_B_SECCOM_CONTROLREMOTO::scm_anEIWithIndexes[] = {0, 4, 8, 10};
 const TDataIOID FORTE_B_SECCOM_CONTROLREMOTO::scm_anEIWith[] = {0, 2, 1, 255, 0, 1, 4, 255, 3, 255, 5, 6, 255};
-const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anEventInputNames[] = {g_nStringIdINIT, g_nStringIdREQ, g_nStringIdCRCI, g_nStringIdCNFTXT, g_nStringIdEvent1};
+const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anEventInputNames[] = {g_nStringIdINIT, g_nStringIdREQ, g_nStringIdCRCI, g_nStringIdCNFTXT};
 
 const TDataIOID FORTE_B_SECCOM_CONTROLREMOTO::scm_anEOWith[] = {0, 1, 255, 2, 255, 3, 255};
-const TForteInt16 FORTE_B_SECCOM_CONTROLREMOTO::scm_anEOWithIndexes[] = {-1, 0, 3, 5, -1, -1, -1};
-const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anEventOutputNames[] = {g_nStringIdINITO, g_nStringIdCNF, g_nStringIdCRCO, g_nStringIdEDATA, g_nStringIdREQTXT, g_nStringIdEvent};
+const TForteInt16 FORTE_B_SECCOM_CONTROLREMOTO::scm_anEOWithIndexes[] = {-1, 0, 3, 5, -1, -1, -1, -1};
+const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anEventOutputNames[] = {g_nStringIdINITO, g_nStringIdCNF, g_nStringIdCRCO, g_nStringIdEDATA, g_nStringIdREQTXT, g_nStringIdREADY, g_nStringIdBUSY};
 
 const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anInternalsNames[] = {g_nStringIdSTRSUB1, g_nStringIdSTRSUB2, g_nStringIdSTRSUB3, g_nStringIdINITCONTROL, g_nStringIdUINTCPY, g_nStringIdLASTDLE, g_nStringIdSTRINGSPACE, g_nStringIdSPACEINT, g_nStringIdAUXINT1, g_nStringIdINTERNALVAR2};
 
 const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anInternalsTypeIds[] = {g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdBOOL, g_nStringIdUINT, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdINT, g_nStringIdINT, g_nStringIdBOOL};
 
 const SFBInterfaceSpec FORTE_B_SECCOM_CONTROLREMOTO::scm_stFBInterfaceSpec = {
-  5,  scm_anEventInputNames,  scm_anEIWith,  scm_anEIWithIndexes,
-  6,  scm_anEventOutputNames,  scm_anEOWith, scm_anEOWithIndexes,  7,  scm_anDataInputNames, scm_anDataInputTypeIds,
+  4,  scm_anEventInputNames,  scm_anEIWith,  scm_anEIWithIndexes,
+  7,  scm_anEventOutputNames,  scm_anEOWith, scm_anEOWithIndexes,  7,  scm_anDataInputNames, scm_anDataInputTypeIds,
   4,  scm_anDataOutputNames, scm_anDataOutputTypeIds,
   0, 0
 };
@@ -328,6 +328,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStateSTART(void){
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateState1(void){
   m_nECCState = scm_nStateState1;
   alg_start();
+  sendOutputEvent( scm_nEventBUSYID);
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateSIMULACIONTECLADO(void){
@@ -374,6 +375,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStateST2(void){
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateExit_ST(void){
   m_nECCState = scm_nStateExit_ST;
+  sendOutputEvent( scm_nEventREADYID);
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateST3(void){
@@ -428,6 +430,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStateIE4(void){
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateExit_IE(void){
   m_nECCState = scm_nStateExit_IE;
+  sendOutputEvent( scm_nEventREADYID);
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateInitEP(void){
@@ -480,6 +483,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStatePE2(void){
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateExit_PE(void){
   m_nECCState = scm_nStateExit_PE;
+  sendOutputEvent( scm_nEventREADYID);
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStatePE3(void){
@@ -504,6 +508,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStatePE5(void){
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateExit_IT(void){
   m_nECCState = scm_nStateExit_IT;
+  sendOutputEvent( scm_nEventREADYID);
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateIT1(void){
@@ -540,6 +545,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStateIT5(void){
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateExit_LE(void){
   m_nECCState = scm_nStateExit_LE;
+  sendOutputEvent( scm_nEventREADYID);
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateLE1(void){
@@ -582,6 +588,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStateCARGAPROGRAMA(void){
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateExit_CP(void){
   m_nECCState = scm_nStateExit_CP;
+  sendOutputEvent( scm_nEventREADYID);
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateInit_CP(void){
@@ -645,6 +652,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStateEP3(void){
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateExit_PE_1(void){
   m_nECCState = scm_nStateExit_PE_1;
+  sendOutputEvent( scm_nEventREADYID);
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateEP4(void){

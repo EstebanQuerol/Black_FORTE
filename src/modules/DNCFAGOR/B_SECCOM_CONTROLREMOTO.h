@@ -74,7 +74,6 @@ private:
   static const TEventID scm_nEventREQID = 1;
   static const TEventID scm_nEventCRCIID = 2;
   static const TEventID scm_nEventCNFTXTID = 3;
-  static const TEventID scm_nEventEvent1ID = 4;
   static const TForteInt16 scm_anEIWithIndexes[];
   static const TDataIOID scm_anEIWith[];
   static const CStringDictionary::TStringId scm_anEventInputNames[];
@@ -84,7 +83,8 @@ private:
   static const TEventID scm_nEventCRCOID = 2;
   static const TEventID scm_nEventEDATAID = 3;
   static const TEventID scm_nEventREQTXTID = 4;
-  static const TEventID scm_nEventEventID = 5;
+  static const TEventID scm_nEventREADYID = 5;
+  static const TEventID scm_nEventBUSYID = 6;
   static const TForteInt16 scm_anEOWithIndexes[];
   static const TDataIOID scm_anEOWith[];
   static const CStringDictionary::TStringId scm_anEventOutputNames[];
@@ -136,7 +136,7 @@ private:
 
   static const SInternalVarsInformation scm_stInternalVars;
 
-   FORTE_BASIC_FB_DATA_ARRAY(6, 7, 4, 10, 0);
+   FORTE_BASIC_FB_DATA_ARRAY(7, 7, 4, 10, 0);
 
 virtual void setInitialValues();
   void alg_INIT(void);
