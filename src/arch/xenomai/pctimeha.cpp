@@ -22,62 +22,50 @@ CPCTimerHandler::CPCTimerHandler(){
 CPCTimerHandler::~CPCTimerHandler(){
   disableHandler();
 }
-//TODO: Change all the timeval structs for timespec
-void CPCTimerHandler::run(){
-  //Calculate time thread periodic cycle based on TICKS_PER_SECOND parameter configured in CMake
-  struct timespec stReq;
-  stReq.tv_sec = 0;
-  stReq.tv_nsec = (1000000000 / getTicksPerSecond());
-  if(stReq.tv_nsec < 1000){
-	  //Time base under 1 us is not supported
-	  DEVLOG_ERROR("TICKS_PER_SECOND greater than 1000000 are not supported");
-	  stReq.tv_nsec = 1000;
-  }
-  struct timeval stReqTime;
-  stReqTime.tv_sec = 0;
-  stReqTime.tv_usec = stReq.tv_nsec / 1000;
-  struct timeval stOldTime;
-  struct timeval stNewTime;
-  struct timeval stDiffTime;
-  struct timeval stRemainingTime;
-  timerclear(&stRemainingTime);
 
+void CPCTimerHandler::run(){
+  //Calculate time handler thread period based on TICKS_PER_SECOND parameter configured in CMake
+  struct timespec stPeriod;
+  stPeriod.tv_sec = 0;
+  stPeriod.tv_nsec = (1000000000 / getTicksPerSecond());
+  if(stPeriod.tv_nsec < 1){
+	  //Time base under 1 ns is not supported
+	  DEVLOG_ERROR("TICKS_PER_SECOND greater than 1000000000 are not supported");
+	  stPeriod.tv_nsec = 1;
+  }
+  //Make this thread periodic
+  unsigned long nOverRuns;
   struct timespec stAuxTime;
-  clock_gettime(CLOCK_HOST_REALTIME, &stAuxTime);
-  stOldTime.tv_sec = stAuxTime.tv_sec;
-  stOldTime.tv_usec = stAuxTime.tv_nsec / 1000;
+  clock_gettime(CLOCK_REALTIME, &stAuxTime);
+  stAuxTime.tv_nsec += 100000;
+  pthread_t oThreadId = pthread_self();
+  if(oThreadId != 0){
+	  if(pthread_make_periodic_np(oThreadId,&stAuxTime,&stPeriod)!= 0){
+		  DEVLOG_ERROR("Error could not set time handler thread period! %s\n", strerror(errno));
+		  return;
+	  }
+  }
 
   while(isAlive()){
-
-    nanosleep(&stReq, NULL);
-
-    clock_gettime(CLOCK_HOST_REALTIME, &stAuxTime);
-    stNewTime.tv_sec = stAuxTime.tv_sec;
-    stNewTime.tv_usec = stAuxTime.tv_nsec / 1000;
-
-    timersub(&stNewTime, &stOldTime, &stDiffTime);
-    timeradd(&stRemainingTime, &stDiffTime, &stRemainingTime);
-    while(!timercmp(&stRemainingTime, &stReqTime, <)){
-      nextTick();
-      timersub(&stRemainingTime, &stReqTime, &stRemainingTime);
-    }
-    stOldTime = stNewTime;  // in c++ this should work fine
-  } 
+	//TODO: Handle overruns
+    nextTick();
+    pthread_wait_np(&nOverRuns);
+  }
 }
 
 void CPCTimerHandler::enableHandler(void){
-  start();
+	start(SCHED_FIFO,sched_get_priority_max(SCHED_FIFO));
 }
 
 void CPCTimerHandler::disableHandler(void){
-  end(); 
+	end();
 }
 
 void CPCTimerHandler::setPriority(int ){
-  //TODO think on hwo to handle this.
+  //TODO think on how to handle this.
 }
 
 int CPCTimerHandler::getPriority(void) const {
-  //TODO think on hwo to handle this.
+  //TODO think on how to handle this.
   return 1;
 }

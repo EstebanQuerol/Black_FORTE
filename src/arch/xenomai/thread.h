@@ -63,6 +63,12 @@ class CXenomaiThread {
      */
     void start(void);
 
+    /*! \brief starts the Thread
+     *	@overload for RT threads
+     *  By calling this method the execution in the run()-Method will be started.
+     */
+    void start(int pa_nPolicy, int pa_nPriority);
+
     /*! \brief Resumes a suspended Thread
      *
      *

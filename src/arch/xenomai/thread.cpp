@@ -16,50 +16,101 @@
 #include <criticalregion.h>
 
 void CXenomaiThread::start(void){
-  // Get new Thread
-  if(0 == m_stThreadID){
+	 // Get new Thread
+	  if(0 == m_stThreadID){
 
-    //If the stackSize is not 0 we have to set it
-    if(m_nStackSize){
-      pthread_attr_t stAttr;
+	    //If the stackSize is not 0 we have to set it
+	    if(m_nStackSize){
+	      pthread_attr_t stAttr;
 
-      if(pthread_attr_init(&stAttr)){
-        DEVLOG_ERROR("Error could not get the default thread attributes! %s\n", strerror(errno));
-        return;
-      }
-  #ifdef __CYGWIN__
-      if (pthread_attr_setstacksize (&stAttr, m_nStackSize)){
-        DEVLOG_ERROR("Error could not set the stacksize for the thread! %s\n", strerror(errno));
-        return;
-      }
-  #else
-      //if (pthread_attr_setstacksize(&stAttr, m_nStackSize)) {
-      if(pthread_attr_setstack(&stAttr, m_pacStack, m_nStackSize)){
-        DEVLOG_ERROR("Error could not set the stacksize for the thread! %s\n", strerror(errno));
-        return;
-      }
-  #endif
-      if(pthread_create(&m_stThreadID, &stAttr, threadFunction, this)){
-        DEVLOG_ERROR("Error could not create the thread! %s\n", strerror(errno));
-        return;
-      }
-      if(pthread_attr_destroy(&stAttr)){
-        DEVLOG_ERROR("Error could not free the thread attributes! %s\n", strerror(errno));
-        return;
-      }
-    }
-    else{
-      if(pthread_create(&m_stThreadID, NULL, threadFunction, this)){
-        DEVLOG_ERROR("Error could not create the thread! %s\n", strerror(errno));
-        return;
-      }
-    }
-  }
-  //wait till the thread is up and running
-  do{
-    //pthread_yield();
-    sleep(1);
-  }while(!isAlive());
+	      if(pthread_attr_init(&stAttr)){
+	        DEVLOG_ERROR("Error could not get the default thread attributes! %s\n", strerror(errno));
+	        return;
+	      }
+	      if(pthread_attr_setstack(&stAttr, m_pacStack, m_nStackSize)){
+	        DEVLOG_ERROR("Error could not set the stacksize for the thread! %s\n", strerror(errno));
+	        return;
+	      }
+	      if(__real_pthread_create(&m_stThreadID, &stAttr, threadFunction, this)){
+	        DEVLOG_ERROR("Error could not create the thread! %s\n", strerror(errno));
+	        return;
+	      }
+	      if(pthread_attr_destroy(&stAttr)){
+	        DEVLOG_ERROR("Error could not free the thread attributes! %s\n", strerror(errno));
+	        return;
+	      }
+	    }
+	    else{
+	      if(__real_pthread_create(&m_stThreadID, NULL, threadFunction, this)){
+	        DEVLOG_ERROR("Error could not create the thread! %s\n", strerror(errno));
+	        return;
+	      }
+	    }
+	  }
+	  //wait till the thread is up and running
+	  do{
+	    //pthread_yield();
+	    sleep(1);
+	  }while(!isAlive());
+}
+
+void CXenomaiThread::start(int pa_nPolicy, int pa_nPriority){
+	// Get new Thread
+	if(0 == m_stThreadID){
+		int l_nPolicy = pa_nPolicy;
+		int l_nPriority = pa_nPriority;
+		//Check input parameters
+		if(l_nPriority < 0 || l_nPriority > 99){
+			DEVLOG_ERROR("Error RT thread priority is not within [0-99]. Default is 99 %s\n");
+			l_nPriority = 99;
+		}
+		if(l_nPolicy != SCHED_FIFO && l_nPolicy != SCHED_RR){
+			DEVLOG_ERROR("Error RT thread policy is unknown. Default is FIFO %s\n");
+			l_nPolicy = SCHED_FIFO;
+		}
+		struct sched_param sParam;
+		sParam.__sched_priority = l_nPriority;
+		pthread_attr_t stAttr;
+		if(pthread_attr_init(&stAttr)){
+			DEVLOG_ERROR("Error could not get the default thread attributes! %s\n", strerror(errno));
+			return;
+		}
+		//Change inheritance policy
+		if(pthread_attr_setinheritsched(&stAttr, PTHREAD_EXPLICIT_SCHED)){
+			DEVLOG_ERROR("Error could not disable thread attribute inheritance! %s\n", strerror(errno));
+			return;
+		}
+		//Change scheduler policy
+		if(pthread_attr_setschedpolicy(&stAttr, l_nPolicy)){
+			DEVLOG_ERROR("Error could not set the scheduler policy for the thread! %s\n", strerror(errno));
+			return;
+		}
+		//Change thread priority
+		if(pthread_attr_setschedparam(&stAttr, &sParam)){
+			DEVLOG_ERROR("Error could not set the priority for the thread! %s\n", strerror(errno));
+		return;
+		}
+		//If the stackSize is not 0 we have to set it
+		if(m_nStackSize){
+		  if(pthread_attr_setstack(&stAttr, m_pacStack, m_nStackSize)){
+			DEVLOG_ERROR("Error could not set the stacksize for the thread! %s\n", strerror(errno));
+			return;
+		  }
+		}
+		if(pthread_create(&m_stThreadID, &stAttr, threadFunction, this)){
+			DEVLOG_ERROR("Error could not create the thread! %s\n", strerror(errno));
+			return;
+		}
+		if(pthread_attr_destroy(&stAttr)){
+			DEVLOG_ERROR("Error could not free the thread attributes! %s\n", strerror(errno));
+			return;
+		}
+	}
+	//wait till the thread is up and running
+	do{
+		//pthread_yield();
+		sleep(1);
+	}while(!isAlive());
 }
 
 void * CXenomaiThread::threadFunction(void *arguments){
