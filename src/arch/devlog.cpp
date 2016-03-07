@@ -44,15 +44,23 @@ void logMessage(E_MsgLevel pa_eLevel, const char *pa_acMessage, ...){
 }
 
 void printLogMessage(E_MsgLevel pa_eLevel, const char *pa_acMessage){
-  fprintf(stderr, cg_acLogLevel[pa_eLevel]);
-
-  if (CTimerHandler::sm_poFORTETimer != 0){
-    fprintf(stderr,": T#%ld%ldms: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
-  }
-  else{
-    fprintf(stderr,": T#notime: ");
-  }
-  fprintf(stderr, pa_acMessage);
+	fprintf(stderr, cg_acLogLevel[pa_eLevel]);
+	if (CTimerHandler::sm_poFORTETimer != 0){
+		if (CTimerHandler::getTicksPerSecond() == 1000){
+			fprintf(stderr,": T#%ld%ldms: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+		}else if (CTimerHandler::getTicksPerSecond() == 10000){
+			fprintf(stderr,": T#%ld%ld00us: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+		}else if (CTimerHandler::getTicksPerSecond() == 100000){
+			fprintf(stderr,": T#%ld%ld0us: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+		}else if (CTimerHandler::getTicksPerSecond() == 1000000){
+			fprintf(stderr,": T#%ld%ldus: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+		}else{
+			  fprintf(stderr,": T#%ld%ldT: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+		}
+	}else{
+		fprintf(stderr,": T#notime: ");
+	}
+	fprintf(stderr, pa_acMessage);
 }
 
 #endif
