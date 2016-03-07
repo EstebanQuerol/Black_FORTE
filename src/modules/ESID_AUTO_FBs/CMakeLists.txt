@@ -4,3 +4,4 @@ forte_add_module(ESID_AUTO_FBs "ESID-UJI automatic Function blocks")
 #############################################################################
 forte_add_subdirectory(Controllers)
 forte_add_subdirectory(Event_Generators)
+forte_add_subdirectory(Measurement)

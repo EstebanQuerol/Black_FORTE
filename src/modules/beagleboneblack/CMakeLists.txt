@@ -3,7 +3,7 @@ forte_add_module(BeagleBoneBlack "BeagleBone Black Function Blocks")
 # Beagle Bone Black
 #############################################################################
 if(FORTE_MODULE_BeagleBoneBlack)
-	if("${FORTE_ARCHITECTURE}" STREQUAL "Posix")
+	if("${FORTE_ARCHITECTURE}" STREQUAL "Posix" OR "${FORTE_ARCHITECTURE}" STREQUAL "Xenomai")
 	forte_add_subdirectory(BlackLib)
 	SET(FORTE_BeagleBoneBlack_IO_Libaries "" CACHE PATH "Path to IO lib: http://mkaczanowski.com/beaglebone-black-cpp-gpio-library-for-beginners/ (leave empty for installed source code)")
 	forte_add_include_directories(${CMAKE_CURRENT_SOURCE_DIR})
@@ -20,6 +20,6 @@ if(FORTE_MODULE_BeagleBoneBlack)
 	
 	else()
 	    set(FORTE_MODULE_BeagleBoneBlack OFF) 
-	    MESSAGE(SEND_ERROR "BeagleBone Black requires Posix architecture!")
+	    MESSAGE(SEND_ERROR "BeagleBone Black requires Posix or Xenomai architecture!")
 	endif()	
 endif()
