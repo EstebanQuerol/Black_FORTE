@@ -24,8 +24,8 @@ const CStringDictionary::TStringId FORTE_CTRL_TPID_ALG::scm_anDataOutputNames[] 
 
 const CStringDictionary::TStringId FORTE_CTRL_TPID_ALG::scm_anDataOutputTypeIds[] = {g_nStringIdBOOL, g_nStringIdSTRING, g_nStringIdREAL};
 
-const TForteInt16 FORTE_CTRL_TPID_ALG::scm_anEIWithIndexes[] = {0, -1, -1};
-const TDataIOID FORTE_CTRL_TPID_ALG::scm_anEIWith[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 255};
+const TForteInt16 FORTE_CTRL_TPID_ALG::scm_anEIWithIndexes[] = {0, 12, -1};
+const TDataIOID FORTE_CTRL_TPID_ALG::scm_anEIWith[] = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 255, 1, 2, 255};
 const CStringDictionary::TStringId FORTE_CTRL_TPID_ALG::scm_anEventInputNames[] = {g_nStringIdINIT, g_nStringIdREQ, g_nStringIdStop};
 
 const TDataIOID FORTE_CTRL_TPID_ALG::scm_anEOWith[] = {0, 1, 255, 2, 255};
