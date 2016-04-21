@@ -42,13 +42,38 @@ void FORTE_SI_CLOCK::executeEvent(int pa_nEIID){
         TIME1().setFromMiliSeconds(clock()*1000/CLOCKS_PER_SEC);
         //isstream
         stringstream tempss;
-
+/*
     	if (CTimerHandler::sm_poFORTETimer != 0){
     		tempss << ": T#" + CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue;
     		tempss << CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue;
     		tempss << "ms" << "	";
     			//fprintf(stderr, ": T#%ld%ldms: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
     		}
+*/
+    	if (CTimerHandler::sm_poFORTETimer != 0){
+    			if (CTimerHandler::getTicksPerSecond() == 1000){
+    			tempss<<"T#" + CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue<< CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue << " ms " << "	";
+    				//fprintf(tempss,": T#%ld%ldms: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+    			}else if (CTimerHandler::getTicksPerSecond() == 10000){
+    				tempss<<"T#" + CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue<< CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue << "00 us " << "	";
+    				//fprintf(stderr,": T#%ld%ld00us: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+    			}else if (CTimerHandler::getTicksPerSecond() == 100000){
+    				tempss<<"T#" + CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue<< CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue << "0 us " << "	";
+    				//fprintf(stderr,": T#%ld%ld0us: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+    			}else if (CTimerHandler::getTicksPerSecond() == 1000000){
+    				tempss<<"T#" + CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue<< CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue << " us " << "	";
+    				//fprintf(stderr,": T#%ld%ldus: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+    			}else{
+    				 // fprintf(stderr,": T#%ld%ldT: ", CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue, CTimerHandler::sm_poFORTETimer->getForteTime().m_nLowerValue);
+    			}
+    		}else{
+    			tempss<< "T#notime" ;
+    			//fprintf(stderr,": T#notime: ");
+    		}
+
+
+
+
 
         string timeprint(tempss.str());
       /*  timeprint = ": TO#" + (string)CTimerHandler::sm_poFORTETimer->getForteTime().m_nUpperValue;

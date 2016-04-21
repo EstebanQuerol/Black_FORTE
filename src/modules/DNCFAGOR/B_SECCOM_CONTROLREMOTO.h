@@ -13,7 +13,6 @@
 #define _B_SECCOM_CONTROLREMOTO_H_
 
 #include <basicfb.h>
-#include <forte_int.h>
 #include <forte_uint.h>
 #include <forte_string.h>
 #include <forte_bool.h>
@@ -70,10 +69,19 @@ private:
     return *static_cast<CIEC_STRING*>(getDO(3));
   };
 
+  CIEC_STRING &TXTFILENAME() {
+    return *static_cast<CIEC_STRING*>(getDO(4));
+  };
+
+  CIEC_BOOL &TXTCONTROL() {
+    return *static_cast<CIEC_BOOL*>(getDO(5));
+  };
+
   static const TEventID scm_nEventINITID = 0;
   static const TEventID scm_nEventREQID = 1;
   static const TEventID scm_nEventCRCIID = 2;
   static const TEventID scm_nEventCNFTXTID = 3;
+  static const TEventID scm_nEventINITO_TXTID = 4;
   static const TForteInt16 scm_anEIWithIndexes[];
   static const TDataIOID scm_anEIWith[];
   static const CStringDictionary::TStringId scm_anEventInputNames[];
@@ -82,9 +90,10 @@ private:
   static const TEventID scm_nEventCNFID = 1;
   static const TEventID scm_nEventCRCOID = 2;
   static const TEventID scm_nEventEDATAID = 3;
-  static const TEventID scm_nEventREQTXTID = 4;
-  static const TEventID scm_nEventREADYID = 5;
-  static const TEventID scm_nEventBUSYID = 6;
+  static const TEventID scm_nEventINITTXTID = 4;
+  static const TEventID scm_nEventREQTXTID = 5;
+  static const TEventID scm_nEventREADYID = 6;
+  static const TEventID scm_nEventBUSYID = 7;
   static const TForteInt16 scm_anEOWithIndexes[];
   static const TDataIOID scm_anEOWith[];
   static const CStringDictionary::TStringId scm_anEventOutputNames[];
@@ -119,16 +128,64 @@ private:
     return *static_cast<CIEC_STRING*>(getVarInternal(6));
   };
 
-  CIEC_INT &SPACEINT() {
-    return *static_cast<CIEC_INT*>(getVarInternal(7));
+  CIEC_UINT &SPACEINT() {
+    return *static_cast<CIEC_UINT*>(getVarInternal(7));
   };
 
-  CIEC_INT &AUXINT1() {
-    return *static_cast<CIEC_INT*>(getVarInternal(8));
+  CIEC_UINT &AUXINT1() {
+    return *static_cast<CIEC_UINT*>(getVarInternal(8));
   };
 
-  CIEC_BOOL &INTERNALVAR2() {
+  CIEC_BOOL &AUXBOOL1() {
     return *static_cast<CIEC_BOOL*>(getVarInternal(9));
+  };
+
+  CIEC_STRING &STRSUB4() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(10));
+  };
+
+  CIEC_STRING &AS0() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(11));
+  };
+
+  CIEC_STRING &AS1() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(12));
+  };
+
+  CIEC_STRING &AS2() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(13));
+  };
+
+  CIEC_STRING &AS3() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(14));
+  };
+
+  CIEC_STRING &AS4() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(15));
+  };
+
+  CIEC_STRING &AS25() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(16));
+  };
+
+  CIEC_STRING &AS5() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(17));
+  };
+
+  CIEC_STRING &AS6() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(18));
+  };
+
+  CIEC_STRING &AS7() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(19));
+  };
+
+  CIEC_STRING &AS8() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(20));
+  };
+
+  CIEC_STRING &AS9() {
+    return *static_cast<CIEC_STRING*>(getVarInternal(21));
   };
 
   static const SFBInterfaceSpec scm_stFBInterfaceSpec;
@@ -136,7 +193,7 @@ private:
 
   static const SInternalVarsInformation scm_stInternalVars;
 
-   FORTE_BASIC_FB_DATA_ARRAY(7, 7, 4, 10, 0);
+   FORTE_BASIC_FB_DATA_ARRAY(8, 7, 6, 22, 0);
 
 virtual void setInitialValues();
   void alg_INIT(void);
@@ -174,6 +231,7 @@ virtual void setInitialValues();
   void alg_CP5(void);
   void alg_CP6(void);
   void alg_EP1(void);
+  void alg_CP2_3(void);
   static const TForteInt16 scm_nStateSTART = 0;
   static const TForteInt16 scm_nStateState1 = 1;
   static const TForteInt16 scm_nStateSIMULACIONTECLADO = 2;
@@ -232,6 +290,7 @@ virtual void setInitialValues();
   static const TForteInt16 scm_nStateExit_PE_1 = 55;
   static const TForteInt16 scm_nStateEP4 = 56;
   static const TForteInt16 scm_nStateEP5 = 57;
+  static const TForteInt16 scm_nStateCP2_3 = 58;
 
   void enterStateSTART(void);
   void enterStateState1(void);
@@ -291,6 +350,7 @@ virtual void setInitialValues();
   void enterStateExit_PE_1(void);
   void enterStateEP4(void);
   void enterStateEP5(void);
+  void enterStateCP2_3(void);
 
   virtual void executeEvent(int pa_nEIID);
 

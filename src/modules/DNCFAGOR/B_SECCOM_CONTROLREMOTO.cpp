@@ -20,31 +20,31 @@ const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anDataInput
 
 const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anDataInputTypeIds[] = {g_nStringIdBOOL, g_nStringIdSTRING, g_nStringIdUINT, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdBOOL};
 
-const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anDataOutputNames[] = {g_nStringIdSTRING1, g_nStringIdSTRING2, g_nStringIdCRCSTROUT, g_nStringIdDATA};
+const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anDataOutputNames[] = {g_nStringIdSTRING1, g_nStringIdSTRING2, g_nStringIdCRCSTROUT, g_nStringIdDATA, g_nStringIdTXTFILENAME, g_nStringIdTXTCONTROL};
 
-const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anDataOutputTypeIds[] = {g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING};
+const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anDataOutputTypeIds[] = {g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdBOOL};
 
-const TForteInt16 FORTE_B_SECCOM_CONTROLREMOTO::scm_anEIWithIndexes[] = {0, 4, 8, 10};
+const TForteInt16 FORTE_B_SECCOM_CONTROLREMOTO::scm_anEIWithIndexes[] = {0, 4, 8, 10, -1};
 const TDataIOID FORTE_B_SECCOM_CONTROLREMOTO::scm_anEIWith[] = {0, 2, 1, 255, 0, 1, 4, 255, 3, 255, 5, 6, 255};
-const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anEventInputNames[] = {g_nStringIdINIT, g_nStringIdREQ, g_nStringIdCRCI, g_nStringIdCNFTXT};
+const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anEventInputNames[] = {g_nStringIdINIT, g_nStringIdREQ, g_nStringIdCRCI, g_nStringIdCNFTXT, g_nStringIdINITO_TXT};
 
-const TDataIOID FORTE_B_SECCOM_CONTROLREMOTO::scm_anEOWith[] = {0, 1, 255, 2, 255, 3, 255};
-const TForteInt16 FORTE_B_SECCOM_CONTROLREMOTO::scm_anEOWithIndexes[] = {-1, 0, 3, 5, -1, -1, -1, -1};
-const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anEventOutputNames[] = {g_nStringIdINITO, g_nStringIdCNF, g_nStringIdCRCO, g_nStringIdEDATA, g_nStringIdREQTXT, g_nStringIdREADY, g_nStringIdBUSY};
+const TDataIOID FORTE_B_SECCOM_CONTROLREMOTO::scm_anEOWith[] = {0, 1, 255, 2, 255, 3, 255, 4, 5, 255};
+const TForteInt16 FORTE_B_SECCOM_CONTROLREMOTO::scm_anEOWithIndexes[] = {-1, 0, 3, 5, 7, -1, -1, -1, -1};
+const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anEventOutputNames[] = {g_nStringIdINITO, g_nStringIdCNF, g_nStringIdCRCO, g_nStringIdEDATA, g_nStringIdINITTXT, g_nStringIdREQTXT, g_nStringIdREADY, g_nStringIdBUSY};
 
-const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anInternalsNames[] = {g_nStringIdSTRSUB1, g_nStringIdSTRSUB2, g_nStringIdSTRSUB3, g_nStringIdINITCONTROL, g_nStringIdUINTCPY, g_nStringIdLASTDLE, g_nStringIdSTRINGSPACE, g_nStringIdSPACEINT, g_nStringIdAUXINT1, g_nStringIdINTERNALVAR2};
+const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anInternalsNames[] = {g_nStringIdSTRSUB1, g_nStringIdSTRSUB2, g_nStringIdSTRSUB3, g_nStringIdINITCONTROL, g_nStringIdUINTCPY, g_nStringIdLASTDLE, g_nStringIdSTRINGSPACE, g_nStringIdSPACEINT, g_nStringIdAUXINT1, g_nStringIdAUXBOOL1, g_nStringIdSTRSUB4, g_nStringIdAS0, g_nStringIdAS1, g_nStringIdAS2, g_nStringIdAS3, g_nStringIdAS4, g_nStringIdAS25, g_nStringIdAS5, g_nStringIdAS6, g_nStringIdAS7, g_nStringIdAS8, g_nStringIdAS9};
 
-const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anInternalsTypeIds[] = {g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdBOOL, g_nStringIdUINT, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdINT, g_nStringIdINT, g_nStringIdBOOL};
+const CStringDictionary::TStringId FORTE_B_SECCOM_CONTROLREMOTO::scm_anInternalsTypeIds[] = {g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdBOOL, g_nStringIdUINT, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdUINT, g_nStringIdUINT, g_nStringIdBOOL, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING, g_nStringIdSTRING};
 
 const SFBInterfaceSpec FORTE_B_SECCOM_CONTROLREMOTO::scm_stFBInterfaceSpec = {
-  4,  scm_anEventInputNames,  scm_anEIWith,  scm_anEIWithIndexes,
-  7,  scm_anEventOutputNames,  scm_anEOWith, scm_anEOWithIndexes,  7,  scm_anDataInputNames, scm_anDataInputTypeIds,
-  4,  scm_anDataOutputNames, scm_anDataOutputTypeIds,
+  5,  scm_anEventInputNames,  scm_anEIWith,  scm_anEIWithIndexes,
+  8,  scm_anEventOutputNames,  scm_anEOWith, scm_anEOWithIndexes,  7,  scm_anDataInputNames, scm_anDataInputTypeIds,
+  6,  scm_anDataOutputNames, scm_anDataOutputTypeIds,
   0, 0
 };
 
 
-const SInternalVarsInformation FORTE_B_SECCOM_CONTROLREMOTO::scm_stInternalVars = {10, scm_anInternalsNames, scm_anInternalsTypeIds};
+const SInternalVarsInformation FORTE_B_SECCOM_CONTROLREMOTO::scm_stInternalVars = {22, scm_anInternalsNames, scm_anInternalsTypeIds};
 
 
 void FORTE_B_SECCOM_CONTROLREMOTO::setInitialValues(){
@@ -52,6 +52,17 @@ void FORTE_B_SECCOM_CONTROLREMOTO::setInitialValues(){
   UINTCPY() = 0;
   SPACEINT() = 0;
   AUXINT1() = 0;
+  AS0() = "\x30";
+  AS1() = "\x31";
+  AS2() = "\x32";
+  AS3() = "\x33";
+  AS4() = "\x34";
+  AS25() = "\x25";
+  AS5() = "\x35";
+  AS6() = "\x36";
+  AS7() = "\x37";
+  AS8() = "\x38";
+  AS9() = "\x39";
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::alg_INIT(void){
@@ -232,7 +243,56 @@ DATA() = RDATA();
 
 void FORTE_B_SECCOM_CONTROLREMOTO::alg_CP1(void){
 STRSUB1() = "\x01\x53\x43\x53\x02";
-STRSUB2() = "\x25\x36\x31\x34\x39\x39";
+AS0() = "\x30";
+AS1() = "\x31";
+AS2() = "\x32";
+AS3() = "\x33";
+AS4() = "\x34";
+AS5() = "\x35";
+AS6() = "\x36";
+AS7() = "\x37";
+AS8() = "\x38";
+AS9() = "\x39";
+
+
+AS25() = "\x25";
+
+SPACEINT() = 1;
+
+
+if((LEN((INSTRING())) > 0)){
+STRSUB2() = MID((INSTRING()), (1), (1));
+};
+
+if((LEN((INSTRING())) == 6) && (STRSUB2() == AS25())){
+	STRSUB2() = DELETE((INSTRING()), (1), (SPACEINT()));
+	AUXBOOL1() = true;
+	while((AUXBOOL1() == true) && (SPACEINT() <= LEN((STRSUB2())))){
+
+		STRSUB4() = MID((STRSUB2()), (1), (SPACEINT()));
+		if((STRSUB4() == AS0()) || (STRSUB4() == AS1()) || (STRSUB4() == AS2()) || (STRSUB4() == AS3()) || (STRSUB4() == AS4()) || (STRSUB4() == AS5()) || (STRSUB4() == AS6()) || (STRSUB4() == AS7()) || (STRSUB4() == AS8()) || (STRSUB4() == AS9())){
+		
+		}
+else{
+			AUXBOOL1() = false;
+		};
+		SPACEINT() = SPACEINT()+1;
+	};
+}
+else{
+	AUXBOOL1() = false;
+};
+
+if((AUXBOOL1() == true)){
+TXTFILENAME() = STRSUB2();
+	STRSUB2() = CONCAT((AS25()), (STRSUB2()));
+}
+else{
+TXTFILENAME() = "\x36\x31\x34\x39\x39";
+	STRSUB2() = "\x25\x36\x31\x34\x39\x39";
+};
+
+
 STRSUB3() = CONCAT((STRSUB1()), (STRSUB2()));
 
 STRSUB2() = "\x09\x44";
@@ -256,7 +316,7 @@ STRSUB1() = "\x02";
 STRSUB2() = TXTSTRING();
 STRINGSPACE() = "\x20";
 
-SPACEINT() = 0;
+SPACEINT() = 1;
 AUXINT1() = LEN((STRSUB2()));
 while((SPACEINT() <= AUXINT1())){
 
@@ -271,6 +331,25 @@ else{
 	};
 	
 };
+
+STRINGSPACE() = "\x0d";
+
+SPACEINT() = 1;
+AUXINT1() = LEN((STRSUB2()));
+while((SPACEINT() <= AUXINT1())){
+
+	STRSUB3() = MID((STRSUB2()), (1), (SPACEINT()));
+	if((STRSUB3() == STRINGSPACE())){
+		STRSUB2() = DELETE((STRSUB2()), (1), (SPACEINT()));
+		AUXINT1() = LEN((STRSUB2()));
+	}
+else{
+	SPACEINT() = SPACEINT()+1;
+	
+	};
+	
+};
+
 
 STRSUB3() = CONCAT((STRSUB1()), (STRSUB2()));
 
@@ -301,23 +380,74 @@ LASTDLE() = "\x10\x30";
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::alg_CP6(void){
+TXTCONTROL() = false;
 STRING1() = "\x04";
 STRING2() = "\x01\x02\x03\x04";
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::alg_EP1(void){
-STRSUB1() = "\x01\x52\x43\x4b\x02";
-STRSUB2() = "\x30\x30";
+
+STRSUB1() = "\x01\x52\x43\x4b\x02\x30\x30";
+
+AS0() = "\x30";
+AS1() = "\x31";
+AS2() = "\x32";
+AS3() = "\x33";
+AS4() = "\x34";
+AS5() = "\x35";
+AS6() = "\x36";
+AS7() = "\x37";
+AS8() = "\x38";
+AS9() = "\x39";
+
+
+AS25() = "\x25";
+
+SPACEINT() = 1;
+
+
+if((LEN((INSTRING())) > 0)){
+STRSUB2() = MID((INSTRING()), (1), (1));
+};
+
+if((LEN((INSTRING())) == 6) && (STRSUB2() == AS25())){
+	STRSUB2() = DELETE((INSTRING()), (1), (SPACEINT()));
+	AUXBOOL1() = true;
+	while((AUXBOOL1() == true) && (SPACEINT() <= LEN((STRSUB2())))){
+
+		STRSUB4() = MID((STRSUB2()), (1), (SPACEINT()));
+		if((STRSUB4() == AS0()) || (STRSUB4() == AS1()) || (STRSUB4() == AS2()) || (STRSUB4() == AS3()) || (STRSUB4() == AS4()) || (STRSUB4() == AS5()) || (STRSUB4() == AS6()) || (STRSUB4() == AS7()) || (STRSUB4() == AS8()) || (STRSUB4() == AS9())){
+		
+		}
+else{
+			AUXBOOL1() = false;
+		};
+		SPACEINT() = SPACEINT()+1;
+	};
+}
+else{
+	AUXBOOL1() = false;
+};
+
+if((AUXBOOL1() == true)){
+
+	STRSUB2() = CONCAT((AS25()), (STRSUB2()));
+}
+else{
+
+	STRSUB2() = "\x25\x36\x31\x34\x39\x39";
+};
+
+
 STRSUB3() = CONCAT((STRSUB1()), (STRSUB2()));
-
-STRSUB2() = "\x25\x36\x31\x34\x39\x39\x4e\x30\x30\x30\x30\x03";
+STRSUB2() = "\x4e\x30\x30\x30\x30\x03";
 STRSUB1() = CONCAT((STRSUB3()), (STRSUB2()));
-
 CRCSTROUT() = STRSUB1();
 
+}
 
-
-
+void FORTE_B_SECCOM_CONTROLREMOTO::alg_CP2_3(void){
+TXTCONTROL() = true;
 }
 
 
@@ -623,6 +753,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStateCP3(void){
 void FORTE_B_SECCOM_CONTROLREMOTO::enterStateCP6(void){
   m_nECCState = scm_nStateCP6;
   alg_CP6();
+  sendOutputEvent( scm_nEventINITTXTID);
   sendOutputEvent( scm_nEventCNFID);
 }
 
@@ -667,6 +798,12 @@ void FORTE_B_SECCOM_CONTROLREMOTO::enterStateEP5(void){
   sendOutputEvent( scm_nEventEDATAID);
   alg_PE5();
   sendOutputEvent( scm_nEventCNFID);
+}
+
+void FORTE_B_SECCOM_CONTROLREMOTO::enterStateCP2_3(void){
+  m_nECCState = scm_nStateCP2_3;
+  alg_CP2_3();
+  sendOutputEvent( scm_nEventINITTXTID);
 }
 
 void FORTE_B_SECCOM_CONTROLREMOTO::executeEvent(int pa_nEIID){
@@ -1060,7 +1197,7 @@ void FORTE_B_SECCOM_CONTROLREMOTO::executeEvent(int pa_nEIID){
         break;
       case scm_nStateCP2:
         if((scm_nEventREQID == pa_nEIID) && (Q()))
-          enterStateCP3();
+          enterStateCP2_3();
         else
         if((scm_nEventREQID == pa_nEIID) && (!Q()))
           enterStateExit_CP();
@@ -1136,8 +1273,14 @@ void FORTE_B_SECCOM_CONTROLREMOTO::executeEvent(int pa_nEIID){
         else
           bTransitionCleared  = false; //no transition cleared
         break;
+      case scm_nStateCP2_3:
+        if(scm_nEventINITO_TXTID == pa_nEIID)
+          enterStateCP3();
+        else
+          bTransitionCleared  = false; //no transition cleared
+        break;
       default:
-      DEVLOG_ERROR("The state is not in the valid range! The state value is: %d. The max value can be: 57.", m_nECCState.operator TForteUInt16 ());
+      DEVLOG_ERROR("The state is not in the valid range! The state value is: %d. The max value can be: 58.", m_nECCState.operator TForteUInt16 ());
         m_nECCState = 0; //0 is always the initial state
         break;
     }
