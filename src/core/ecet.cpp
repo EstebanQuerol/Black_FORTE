@@ -135,7 +135,11 @@ void CEventChainExecutionThread::changeExecutionState(EMGMCommandType pa_unComma
     case cg_nMGM_CMD_Start:
       if(!isAlive()){
         //only start the thread when we are not already running
+#ifdef XENO_RT_THREADS
+        start(1,90);
+#else
         start();
+#endif
       }
       break;
     case cg_nMGM_CMD_Kill:

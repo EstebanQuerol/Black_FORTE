@@ -118,7 +118,11 @@ void CFDSelectHandler::addComCallback(TFileDescriptor pa_nFD, forte::com_infra::
     m_bConnectionListChanged = true;
   }
   if(!isAlive()){
+#ifdef XENO_RT_THREADS
+    this->start(1,90);
+#else
     this->start();
+#endif
   }
   resumeSelfSuspend();
 }
