@@ -67,6 +67,9 @@ class CEventChainExecutionThread : public CThread{
     TEventEntryPtr* m_pstEventListEnd;
     //@}
 
+    /*! \brief Clear the event chain.
+     */
+    void clear(void);
   private:
     /*! \brief The thread run()-method where the events are sent to the FBs and the FBs are executed in.
      *
@@ -76,10 +79,6 @@ class CEventChainExecutionThread : public CThread{
      * \return true if thread execution ended successfully
      */
     virtual void run(void);
-
-    /*! \brief Clear the event chain.
-     */
-    void clear(void);
 
     bool externalEventOccured(){
       /* we should not need a protection here as we are just comparing the both

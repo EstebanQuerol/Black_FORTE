@@ -61,11 +61,11 @@ void CXenomaiThread::start(int pa_nPolicy, int pa_nPriority){
 		int l_nPriority = pa_nPriority;
 		//Check input parameters
 		if(l_nPriority < 0 || l_nPriority > 99){
-			DEVLOG_ERROR("Error RT thread priority is not within [0-99]. Default is 99 %s\n");
+			DEVLOG_ERROR("Error RT thread priority is not within [0-99]. Default is 99.\n");
 			l_nPriority = 99;
 		}
 		if(l_nPolicy != SCHED_FIFO && l_nPolicy != SCHED_RR){
-			DEVLOG_ERROR("Error RT thread policy is unknown. Default is FIFO %s\n");
+			DEVLOG_ERROR("Error RT thread policy is unknown. Default is FIFO.\n");
 			l_nPolicy = SCHED_FIFO;
 		}
 		struct sched_param sParam;

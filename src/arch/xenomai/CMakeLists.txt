@@ -21,7 +21,7 @@ if("${FORTE_ARCHITECTURE}" STREQUAL "Xenomai")
 	forte_add_definition("-W -Wall -Wextra -Woverloaded-virtual -Wconversion -DFORTE_LITTLE_ENDIAN -ggdb")
   	forte_add_include_directories(../${CMAKE_CURRENT_SOURCE_DIR})
 	forte_add_include_directories(${CMAKE_CURRENT_SOURCE_DIR})
-	forte_add_sourcefile_hcpp(thread pctimeha sync)
+	forte_add_sourcefile_hcpp(thread pctimeha sync XenomaiECET)
 	forte_add_sourcefile_cpp(main.cpp)
 
 	#Ethernet support
