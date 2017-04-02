@@ -57,13 +57,13 @@ class CXenomaiThread {
       return m_oDeadline;
     }
 
-    /*! \brief starts the Thread
+    /*! \brief starts a native POSIX thread
      *
      *  By calling this method the execution in the run()-Method will be started.
      */
     void start(void);
 
-    /*! \brief starts the Thread
+    /*! \brief starts a XENOMAI Real-Time thread
      *	@overload for RT threads
      *  By calling this method the execution in the run()-Method will be started.
      */
@@ -102,6 +102,12 @@ class CXenomaiThread {
     	m_bAlive = paAlive;
     }
 
+    /*! \brief thread identifier getter
+     *
+     */
+    pthread_t getThreadID(){
+    	return m_stThreadID;
+    }
   private:
     /*!\brief Function that is given to the system thread support that should be called for the thread.
      *
