@@ -57,7 +57,9 @@ void FORTE_XENO_RT_E_EO::executeEvent(int pa_nEIID){
 		sendOutputEvent(scm_nEventINITOID);
 		break;
 	case scm_nEventUpdateID:
-		m_oECEO1.changeThreadAttributes(Policy_EO1(), Priority_EO1());
+		if(m_bInitialized){
+			m_oECEO1.changeThreadAttributes(Policy_EO1(), Priority_EO1());
+		}
 		break;
 	case scm_nEventEIID:
 		if(m_bInitialized){
