@@ -823,6 +823,64 @@ int BBBIO_sys_Disable_GPIO(unsigned int gpio)		// Disable GPIOx's clock
 	}
 	return 1 ;
 }
+
+//-----------------------------------------------------------------------------------------------
+/*********************************
+ Enable GPIO clock of a PIN
+ *******************************
+ * Check GPIO module clock
+ *	@param port     : BBB Expansion Header ID , 8 or 9 .
+ *  @param pin      : which pin you want to control .
+ *
+ *	@return 	: 0 for success , -1 for failed
+ *
+ *	@example 	: BBBIO_sys_Check_GPIO(8, 7);	// Check GPIO2's module clock state
+ *
+ *  Warring 	: This function won't enable GPIOX clocks that are already enabled.
+ */
+int BBBIO_sys_Enable_GPIO_PIN(unsigned int port, unsigned int pin){
+	int param_error=0;				// parameter error
+	volatile unsigned int* reg;		// GPIO register
+
+	// sanity checks
+	if (memh==0)
+		param_error=1;
+	if ((port<8) || (port>9))               // if input is not port8 and port 9 , because BBB support P8/P9 Connector
+		param_error=1;
+	if ((pin<1) || (pin>46))                // if pin over/underflow , range : 1~46
+		param_error=1;
+	if (PortSet_ptr[port - 8][pin - 1]<0)   // pass GND OR VCC (PortSet as -1)
+		param_error=1;
+
+    if (param_error) {
+	#ifdef BBBIO_LIB_DBG
+			printf("BBBIO_sys_Check_GPIO : parameter error!\n");
+	#endif
+			return -1 ;
+		}
+
+	switch(PortSet_ptr[port - 8][pin - 1]) {
+		case BBBIO_GPIO0 :
+			reg =(void *)cm_wkup_addr + BBBIO_CM_WKUP_GPIO0_CLKCTRL;
+			break ;
+		case BBBIO_GPIO1 :
+			reg =(void *)cm_per_addr + BBBIO_CM_PER_GPIO1_CLKCTRL;
+			break ;
+		case BBBIO_GPIO2 :
+			reg =(void *)cm_per_addr + BBBIO_CM_PER_GPIO2_CLKCTRL;
+			break ;
+		case BBBIO_GPIO3 :
+			reg =(void *)cm_per_addr + BBBIO_CM_PER_GPIO3_CLKCTRL;
+			break ;
+		default :
+			return 0 ;
+			break ;
+		}
+	if (0x2 != (*reg & 0x2))
+		*reg |= 0x2;
+	return 0;
+}
+
 //-------------------------------------------------------------------------------------------
 /*********************************
   millisecond  sleep
