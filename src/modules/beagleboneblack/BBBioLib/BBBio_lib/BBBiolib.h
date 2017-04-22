@@ -333,6 +333,7 @@ void BBBIO_sys_Expansion_Header_status(unsigned int port) ;
 /*  Enable /Disable GPIOx's Clock */
 int BBBIO_sys_Enable_GPIO(unsigned int gpio);
 int BBBIO_sys_Disable_GPIO(unsigned int gpio);
+int BBBIO_sys_Enable_GPIO_PIN(unsigned int port, unsigned int pin);
 
 /* port/pin unit , control "Single" pin one time
  *
