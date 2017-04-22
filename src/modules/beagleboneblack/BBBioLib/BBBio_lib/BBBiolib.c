@@ -803,7 +803,7 @@ int BBBIO_sys_Disable_GPIO(unsigned int gpio)		// Disable GPIOx's clock
 	switch(gpio) {
 	case BBBIO_GPIO0 :
 		reg =(void *)cm_wkup_addr + BBBIO_CM_WKUP_GPIO0_CLKCTRL;
-		*reg &= 0x2 ;
+		*reg &= ~0x2 ;
 		break ;
 	case BBBIO_GPIO1 :
 		reg =(void *)cm_per_addr + BBBIO_CM_PER_GPIO1_CLKCTRL;
