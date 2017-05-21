@@ -277,6 +277,17 @@ int BBBIO_sys_pinmux_check(unsigned int port, unsigned int pin, unsigned int Cfl
 #define BBBIO_GPIOX_LEN 	0x1000		/* GPIO length , ex: GPIO0 0x44e07000 ~ 0x44e07FFF */
 
 /* register offset */
+#define GPIO_IRQSTATUS_0		0x2C
+#define GPIO_IRQSTATUS_1		0X30
+#define GPIO_IRQSTATUS_SET_0 	0x34
+#define GPIO_IRQSTATUS_SET_1 	0x38
+#define GPIO_IRQSTATUS_CLR_0	0x3C
+#define GPIO_IRQSTATUS_CLR_1	0x40
+#define GPIO_LEVELDETECT0		0x140
+#define GPIO_LEVELDETECT1		0x144
+#define GPIO_RISINGDETECT		0x148
+#define GPIO_FALLINGDETECT		0x14C
+
 #define BBBIO_GPIO_OE			0x134
 #define BBBIO_GPIO_DATAIN 		0x138
 #define BBBIO_GPIO_DATAOUT 		0x13C
@@ -287,6 +298,11 @@ int BBBIO_sys_pinmux_check(unsigned int port, unsigned int pin, unsigned int Cfl
 #define BBBIO_GPIO_DEBOUNCENABLE	0x150
 #define BBBIO_GPIO_DEBOUNCINGTIME	0x154
 
+/* GPIO interruption modes */
+#define RISINGEDGE_IT		0x1
+#define FALLINGEDGE_IT		0x2
+#define LEVELDETECT0_IT 	0x4
+#define LEVELDETECT1_IT 	0x8
 
 /* ----------------------------------------------------------------------
  * iolib Basic function
@@ -330,10 +346,14 @@ void BBBIO_sys_Expansion_Header_status(unsigned int port) ;
  * BBBIO GPIO function
  */
 
-/*  Enable /Disable GPIOx's Clock */
+/*  Enable / Disable GPIOx's Clock */
 int BBBIO_sys_Enable_GPIO(unsigned int gpio);
 int BBBIO_sys_Disable_GPIO(unsigned int gpio);
 int BBBIO_sys_Enable_GPIO_PIN(unsigned int port, unsigned int pin);
+
+/* Enable / Disable GPIO pins IRQs*/
+int BBBIO_Enable_GPIO_PIN_IRQ(unsigned int port, unsigned int pin, unsigned int mode);
+int BBBIO_Disable_GPIO_PIN_IRQ(unsigned int port, unsigned int pin);
 
 /* port/pin unit , control "Single" pin one time
  *

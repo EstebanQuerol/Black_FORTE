@@ -154,6 +154,7 @@ int iolib_init(void)
 	BBBIO_PWM_Init();
 	BBBIO_McSPI_Init();
 	BBBIO_ADCTSC_Init();
+	BBBIO_IT_CTRLR_Init();
 
 	return 0;
 }
@@ -742,8 +743,8 @@ int BBBIO_sys_Enable_GPIO(unsigned int gpio)		// Enable GPIOx's clock
 	if (param_error) {
 #ifdef BBBIO_LIB_DBG
 		printf("BBBIO_sys_Enable_GPIO: parameter error!\n");
-		return 0;
 #endif
+		return 0;
 	}
 
 	switch(gpio) {
@@ -829,12 +830,12 @@ int BBBIO_sys_Disable_GPIO(unsigned int gpio)		// Disable GPIOx's clock
  Enable GPIO clock of a PIN
  *******************************
  * Check GPIO module clock
- *	@param port     : BBB Expansion Header ID , 8 or 9 .
- *  @param pin      : which pin you want to control .
+ *	@param port     : BBB Expansion Header ID , 8 or 9.
+ *  @param pin      : which pin you want to control.
  *
  *	@return 	: 0 for success , -1 for failed
  *
- *	@example 	: BBBIO_sys_Check_GPIO(8, 7);	// Check GPIO2's module clock state
+ *	@example 	: BBBIO_sys_Enable_GPIO_PIN(8, 7);	// Enable GPIO2's module clock
  *
  *  Warring 	: This function won't enable GPIOX clocks that are already enabled.
  */
@@ -854,7 +855,7 @@ int BBBIO_sys_Enable_GPIO_PIN(unsigned int port, unsigned int pin){
 
     if (param_error) {
 	#ifdef BBBIO_LIB_DBG
-			printf("BBBIO_sys_Check_GPIO : parameter error!\n");
+			printf("BBBIO_sys_Enable_GPIO_PIN : parameter error!\n");
 	#endif
 			return -1 ;
 		}
@@ -881,6 +882,100 @@ int BBBIO_sys_Enable_GPIO_PIN(unsigned int port, unsigned int pin){
 	return 0;
 }
 
+//-----------------------------------------------------------------------------------------------
+/*********************************
+ Enable GPIO PIN IRQ
+ *******************************
+ * Enable a GPIO PIN Interrupt request
+ *	@param port     : BBB Expansion Header ID: 8 or 9.
+ *  @param pin      : Pin you want to control: 1-46
+ *  @param mode		: Detection mode: RISINGEDGE_IT, FALLINGEDGE_IT, LEVELDETECT0_IT or LEVELDETECT1_IT
+ *  				  Multiple modes can be enabled using | operator. i.e. RISINGEDGE_IT | FALLINGEDGE_IT
+ *
+ *	@return 	: 0 for success , -1 for failed
+ *
+ *	@example 	: BBBIO_Enable_GPIO_PIN_IRQ(8, 7, RISINGEDGE_IT | FALLINGEDGE_IT);	// Enable PIN 8,7 IRQ in mode
+ *
+ */
+int BBBIO_Enable_GPIO_PIN_IRQ(unsigned int port, unsigned int pin, unsigned int mode){
+	int param_error=0;				// parameter error
+	volatile unsigned int* reg;		// GPIO register
+
+	// sanity checks
+	if (memh==0)
+		param_error=1;
+	if ((port<8) || (port>9))               // if input is not port8 and port 9 , because BBB support P8/P9 Connector
+		param_error=1;
+	if ((pin<1) || (pin>46))                // if pin over/underflow , range : 1~46
+		param_error=1;
+	if (PortSet_ptr[port - 8][pin - 1]<0)   // pass GND OR VCC (PortSet as -1)
+		param_error=1;
+    if (param_error) {
+	#ifdef BBBIO_LIB_DBG
+			printf("BBBIO_Enable_GPIO_PIN_IRQ : parameter error!\n");
+	#endif
+			return -1 ;
+	}
+    //By default GPIO A-channel IRQs are used
+	reg = (void*) gpio_addr[PortSet_ptr[port - 8][pin - 1]] + GPIO_IRQSTATUS_SET_0;
+	*reg |= PortIDSet_ptr[port - 8][pin - 1];
+
+	if(mode & RISINGEDGE_IT){
+		reg = (void*) gpio_addr[PortSet_ptr[port - 8][pin - 1]]	+ GPIO_RISINGDETECT;
+		*reg |= PortIDSet_ptr[port - 8][pin - 1];
+	}
+	if(mode & FALLINGEDGE_IT){
+		reg = (void*) gpio_addr[PortSet_ptr[port - 8][pin - 1]]	+ GPIO_FALLINGDETECT;
+		*reg |= PortIDSet_ptr[port - 8][pin - 1];
+	}
+	if(mode & LEVELDETECT0_IT){
+		reg = (void*) gpio_addr[PortSet_ptr[port - 8][pin - 1]]	+ GPIO_LEVELDETECT0;
+		*reg |= PortIDSet_ptr[port - 8][pin - 1];
+	}
+	if(mode & LEVELDETECT1_IT){
+		reg = (void*) gpio_addr[PortSet_ptr[port - 8][pin - 1]]	+ GPIO_LEVELDETECT1;
+		*reg |= PortIDSet_ptr[port - 8][pin - 1];
+	}
+	return 0;
+}
+
+//-----------------------------------------------------------------------------------------------
+/*********************************
+ Disable GPIO PIN IRQ
+ *******************************
+ * Disable a GPIO PIN Interrupt request
+ *	@param port     : BBB Expansion Header ID: 8 or 9.
+ *  @param pin      : Pin you want to control: 1-46
+ *
+ *	@return 	: 0 for success , -1 for failed
+ *
+ *	@example 	: BBBIO_Disable_GPIO_PIN_IRQ(8, 7);	// Disable PIN 8,7 IRQ
+ *
+ */
+int BBBIO_Disable_GPIO_PIN_IRQ(unsigned int port, unsigned int pin){
+	int param_error=0;				// parameter error
+	volatile unsigned int* reg;		// GPIO register
+
+	// sanity checks
+	if (memh==0)
+		param_error=1;
+	if ((port<8) || (port>9))               // if input is not port8 and port 9 , because BBB support P8/P9 Connector
+		param_error=1;
+	if ((pin<1) || (pin>46))                // if pin over/underflow , range : 1~46
+		param_error=1;
+	if (PortSet_ptr[port - 8][pin - 1]<0)   // pass GND OR VCC (PortSet as -1)
+		param_error=1;
+    if (param_error) {
+	#ifdef BBBIO_LIB_DBG
+			printf("BBBIO_Disable_GPIO_PIN_IRQ : parameter error!\n");
+	#endif
+			return -1 ;
+	}
+    //By default GPIO A-channel IRQs are cleared
+	reg = (void*) gpio_addr[PortSet_ptr[port - 8][pin - 1]] + GPIO_IRQSTATUS_CLR_0;
+	*reg |= PortIDSet_ptr[port - 8][pin - 1];
+	return 0;
+}
 //-------------------------------------------------------------------------------------------
 /*********************************
   millisecond  sleep
